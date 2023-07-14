@@ -21,7 +21,7 @@ class Version {
     }
 
     toString() {
-        return this.versions.toString()
+        return this.versions.join('.')
     }
 }
 

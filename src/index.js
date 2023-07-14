@@ -20,8 +20,12 @@ async function run(octokit, context, versionPrefix, versionSeparator) {
         throw new Error('No matched milestones.')
     }
 
+    core.debug("Matched milestones: " + matchedMilestones.toString());
+
     // assign to max active version
     const milestone = matchedMilestones[matchedMilestones.length - 1]
+    core.debug("Max version: " + milestone._version);
+
     const { issue, pull_request } = context.payload
     return octokit.rest.issues.update({
         milestone: milestone.number,
