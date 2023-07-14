@@ -20,14 +20,8 @@ async function run(octokit, context, versionPrefix, versionSeparator) {
         throw new Error('No matched milestones.')
     }
 
-    var milestoneIndex = matchedMilestones.findIndex(m => m._version.getPatchVersion() === 0)
-    if (milestoneIndex > 0) {
-        milestoneIndex--  // nearest minor version
-    } else if (milestoneIndex < 0) {
-        milestoneIndex = matchedMilestones.length - 1  // max patch version
-    }
-
-    const milestone = matchedMilestones[milestoneIndex]
+    // assign to max active version
+    const milestone = matchedMilestones[matchedMilestones.length - 1]
     const { issue, pull_request } = context.payload
     return octokit.rest.issues.update({
         milestone: milestone.number,
